@@ -1,6 +1,4 @@
-package BasicSyntaxConditionalStatementsandLoopsExercise;
-
-import com.sun.source.tree.WhileLoopTree;
+package BasicSyntaxConditionalStatementsAndLoopsExercise;
 
 import java.util.Scanner;
 
@@ -22,7 +20,8 @@ public class P07VendingMachine {
             input = scanner.nextLine();
         }
         double price = 0;
-        input=scanner.nextLine();
+        boolean notValid = false;
+        input = scanner.nextLine();
         while (!input.equals("End")) {
             switch (input) {
                 case "Nuts":
@@ -42,20 +41,26 @@ public class P07VendingMachine {
                     break;
                 default:
                     System.out.println("Invalid product");
+                    notValid = true;
+                    break;
             }
-            if (price <= totalMoney && totalMoney!=0) {
-                System.out.println("Purchased " + input);
-                totalMoney -= price;
-            } else {
-                System.out.println("Sorry, not enough money");
+            if (!notValid) {
+                if (price <= totalMoney) {
+                    System.out.println("Purchased " + input);
+                    totalMoney -= price;
+                } else {
+                    System.out.println("Sorry, not enough money");
+                }
             }
-            price = 0;
-
+            notValid = false;
             input = scanner.nextLine();
         }
 
-        if (totalMoney >= 0) {
-            System.out.printf("Change: %.2f", totalMoney);
-        }
+
+        //if (totalMoney >= 0) {
+        System.out.printf("Change: %.2f", totalMoney);
+        // } else {
+        //   System.out.println("Change: 0.00");
+        // }
     }
 }
