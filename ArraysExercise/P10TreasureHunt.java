@@ -14,17 +14,35 @@ public class P10TreasureHunt {
         while (!loot[0].equals("Yohoho!")) {
             switch (loot[0]) {
                 case "Loot":
-                    String[] newLoot = new String[chest.length+ loot.length];
-                    boolean same = false;
-                    for (int i = 0; i < newLoot.length; i++) {
-                        newLoot[i]=loot[i];
+                    boolean sameItem = false;
+                    int indexSameItem = 0;
+                    for (int i = 0; i < chest.length; i++) {
+                        for (int j = 1; j < loot.length; j++) {
+                            if (chest[i].equals(loot[j])) {
+                                sameItem = true;
+                                indexSameItem = i;
+                                break;
+                            }
+                        }
                     }
-                    for (int i = loot.length; i < newLoot.length; i++) {
-
-                        newLoot[i]=chest[chest.length+i];
+                    if (sameItem) {
+                        String[] tempChest = new String[chest.length - 1];
+                        for (int i = 0; i < chest.length - 1; i++) {
+                            if (i != indexSameItem) {
+                                tempChest[i] = chest[i];
+                            }
+                        }
+                        chest = tempChest;
                     }
-                    chest=newLoot;
+                    String[] tempChest = new String[chest.length + loot.length];
+                    for (int i = loot.length - 1; i > 0; i--) {
+                        tempChest[i] = loot[i];
+                    }
+                    for (int i = 0; i < chest.length; i++) {
+                        tempChest[i + loot.length - 1] = chest[i];
+                    }
                     break;
+
                 case "Drop":
                     if (Integer.parseInt(loot[1]) > chest.length) {
                         continue;

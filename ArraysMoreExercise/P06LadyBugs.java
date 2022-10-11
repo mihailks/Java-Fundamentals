@@ -11,48 +11,51 @@ public class P06LadyBugs {
         int[] startPositions = Arrays.stream(scanner.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
         int[] field = new int[fieldSize];
 
-        int finalFieldSize = (fieldSize < startPositions.length - 1) ? fieldSize : startPositions.length;
-        for (int i = 0; i < finalFieldSize; i++) {
-            field[startPositions[i]] = 1;
+        for (int i = 0; i < startPositions.length; i++) {
+            if (startPositions[i] >= 0 && startPositions[i] < fieldSize) {
+                field[startPositions[i]] = 1;
+            }
         }
-
         String[] input = scanner.nextLine().split(" ");
         while (!(input[0].equals("end"))) {
             int start = Integer.parseInt(input[0]);
             int jump = Integer.parseInt(input[2]);
 
-            if (field[start] == 0) {                  //first check if there is a ladybug
+            if (start < 0 || start >= field.length || field[start] != 1) {                   //first check if there is a ladybug at the start
                 input = scanner.nextLine().split(" ");
                 continue;
             }
-            if ((start + jump) > field.length - 1) {             //check if landing is in the field
-                input = scanner.nextLine().split(" ");
-                continue;
-            }
-            // until here she don`t make the jump at all
-
+            //fly
+            field[start] = 0;
 
             if (input[1].equals("right")) {
-                while (field[start + jump] == 1 && start + jump < field.length - 1) {
-                    jump += Integer.parseInt(input[2]);
+                if ((start + jump) > fieldSize) {             //check if the landing is in the field
+                    input = scanner.nextLine().split(" ");
+                    continue;
                 }
-                field[start + jump] = 1;
-            } else {
-                while (field[start - jump] == 1 && start - jump >= 0) {
-                    jump -= Integer.parseInt(input[2]);
+                //land
+                start += jump;
+                while (start < fieldSize && field[start] == 1) { //check if the landing is free
+                    start += jump;
                 }
-                field[start - jump] = 1;
-            }
-            field[start] = 0;
-//            while ((field[start + jump] == 1 && start + jump < field.length - 1)
-//                    || (start - jump >= 0 && field[start - jump] == 1)) {
-//                if (input[1].equals("right")) {
-//                    jump += Integer.parseInt(input[2]);
-//                } else {
-//                    jump -= Integer.parseInt(input[2]);
-//                }
-//            }
+                if (start < fieldSize)
+                    field[start] = 1;
 
+            } else {
+
+                if ((start - jump) < 0) {             //check if the landing is in the field
+                    input = scanner.nextLine().split(" ");
+                    continue;
+                }
+                //land
+                start -= jump;
+                while (start >= 0 && field[start] == 1) {
+                    start -= jump;
+                }
+                if (start >= 0)
+                    field[start] = 1;
+
+            }
             input = scanner.nextLine().split(" ");
         }
         for (int i = 0; i < field.length; i++) {
