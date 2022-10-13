@@ -1,22 +1,34 @@
 package MethodsLab;
 
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class P11MathOperations {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int n = Integer.parseInt(scanner.nextLine());
+        int a = Integer.parseInt(scanner.nextLine());
+        char operator = scanner.nextLine().charAt(0);
+        int b = Integer.parseInt(scanner.nextLine());
 
-        printSign(n);
-
+        DecimalFormat dF = new DecimalFormat("0.##");
+        System.out.println(dF.format(calculate(a, operator, b)));
     }
-    public static void printSign(int n){
-        if (n<0){
-            System.out.printf("The number %d is negative.",n);
-        } else if (n>0){
-            System.out.printf("The number %d is positive.",n);
-        } else {
-            System.out.println("The number 0 is zero.");
+    public static double calculate(int a, char operator, int b) {
+        double result = 0;
+        switch (operator) {
+            case '+':
+                result = a + b;
+                break;
+            case '-':
+                result = a - b;
+                break;
+            case '*':
+                result = a * b;
+                break;
+            case '/':
+                result = a * 1.0 / b;
+                break;
         }
+        return result;
     }
 }
