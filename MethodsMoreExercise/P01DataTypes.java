@@ -17,7 +17,7 @@ public class P01DataTypes {
                 break;
             case "string":
                 String input = scanner.nextLine();
-                printString(input); 
+                printString(input);
                 break;
         }
     }
