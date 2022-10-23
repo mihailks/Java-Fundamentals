@@ -1,0 +1,26 @@
+import java.util.Scanner;
+
+public class P01 {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        double budget = Double.parseDouble(scanner.nextLine());
+
+        int students = Integer.parseInt(scanner.nextLine());
+
+        double flour = Double.parseDouble(scanner.nextLine());
+        double singleEgg = Double.parseDouble(scanner.nextLine());
+        double singleApron = Double.parseDouble(scanner.nextLine());
+
+        double totalPrice = 0;
+        int freeFlour = students / 5;
+        totalPrice = (singleApron * Math.ceil(students * 1.2)) + singleEgg * 10 * students
+                + flour * (students - freeFlour);
+
+        if (totalPrice > budget) {
+            System.out.printf("%.2f$ more needed.", totalPrice - budget);
+        } else {
+            System.out.printf("Items purchased for %.2f$.", totalPrice);
+        }
+    }
+}
