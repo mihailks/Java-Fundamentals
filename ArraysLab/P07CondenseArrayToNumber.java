@@ -9,7 +9,6 @@ public class P07CondenseArrayToNumber {
 
         int[] arr = Arrays.stream(scanner.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
 
-
         while (arr.length > 1) {
             int[] newArr = new int[arr.length - 1];
             for (int i = 0; i < arr.length - 1; i++) {
