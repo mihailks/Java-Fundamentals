@@ -78,7 +78,7 @@ public class P05VehicleCatalogue {
         double averageCarHP = 0;
         double averageTruckHP = 0;
         for (Vehicle vehicle : vehiclesList) {
-            if (vehicle.getTypeOfVehicle().equals("car")) {
+            if (vehicle.getTypeOfVehicle().equals("Car")) {
                 averageCarHP += vehicle.getHorsepowerOfVehicle();
                 carCounter++;
             } else {
