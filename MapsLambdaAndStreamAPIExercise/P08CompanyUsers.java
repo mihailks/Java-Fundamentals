@@ -1,41 +1,33 @@
 package MapsLambdaAndStreamAPIExercise;
 
+import java.net.ServerSocket;
 import java.util.*;
 
 public class P08CompanyUsers {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
-        Map<String, List<String>> companies = new LinkedHashMap<>();
+        Map<String, List<String>> companiesMap = new LinkedHashMap<>();
         while (!input.equals("End")){
 
             String company = input.split(" -> ")[0];
-            String ID = input.split(" -> ")[0];
+            String ID = input.split(" -> ")[1];
 
-//            if (companies.containsKey(company)){
-//                List<String> employees = companies.get(company);
-//                if (!employees.contains(ID)){
-//                    employees.add(ID);
-//                }
-//            } else {
-//                List<String> employees = new ArrayList<>();
-//                employees.add(ID);
-//                companies.put(company,employees);
-//            }
+            companiesMap.putIfAbsent(company, new ArrayList<>());   //if there is no such company
 
-
-
-            if (!companies.containsKey(company)){
-                companies.put(company, new ArrayList<>());
-            }
-            if (!companies.containsValue(ID)){
-                List<String> employees = new ArrayList<>();
-                employees.add(ID);
-                companies.put(company,employees);
-            } else {
-
+            if (!companiesMap.get(company).contains(ID)) {
+                companiesMap.get(company).add(ID);
             }
             input = scanner.nextLine();
         }
+
+        companiesMap.entrySet().forEach(entry -> {
+            System.out.println(entry.getKey());
+            entry.getValue().forEach(employee -> System.out.println("-- " + employee));
+
+        });
+
+
+
     }
 }
