@@ -18,10 +18,15 @@ public class P09ForceBook {
 
                 forceBookMap.putIfAbsent(forceSide, new ArrayList<>());
 
-                if (!forceBookMap.containsValue(forceUser)) {
+                boolean isExistUser = false;
+                for (List<String> listUsers : forceBookMap.values()) {
+                    if (listUsers.contains(forceUser)) {
+                        isExistUser = true;
+                        break;
+                    }
+                }
+                if (!isExistUser) {
                     forceBookMap.get(forceSide).add(forceUser);
-                } else {
-                    continue;
                 }
 
             } else {
@@ -30,20 +35,19 @@ public class P09ForceBook {
 
                 forceBookMap.entrySet().forEach(e -> e.getValue().remove(forceUser));
 
-
                 forceBookMap.putIfAbsent(forceSide, new ArrayList<>());
-                if (!forceBookMap.containsValue(forceUser)) {
-                    forceBookMap.get(forceSide).add(forceUser);
-                }
+                forceBookMap.get(forceSide).add(forceUser);
 
+                System.out.printf("%s joins the %s side!%n", forceUser, forceSide);
             }
             input = scanner.nextLine();
         }
 
-
         forceBookMap.entrySet().forEach(entry -> {
-            System.out.printf("side: %s, Members: %d\n", entry.getKey(), entry.getValue().size());
-            entry.getValue().forEach(user -> System.out.println("! " + user));
+            if (entry.getValue().size() > 0) {
+                System.out.printf("Side: %s, Members: %d\n", entry.getKey(), entry.getValue().size());
+                entry.getValue().forEach(user -> System.out.println("! " + user));
+            }
         });
     }
 }
