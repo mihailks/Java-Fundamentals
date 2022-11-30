@@ -10,24 +10,27 @@ public class P03SoftUniBarIncome {
 
         String input = scanner.nextLine();
 
-        String regex = "%(?<name>[A-Z][a-z]*)%<(?<product>[A-Z][a-z]*)>|(?<quantity>\\d+)|(?<price>\\d+\\.?\\d*)$";
+        String regex = "%(?<name>[A-Z][a-z]*)%[^|$%.]*<(?<product>\\w+)>[^|$%.]*\\|(?<quantity>[0-9]+)\\|[^|$%.]*?(?<price>[0-9]+\\.?[0-9]*)\\$";
         Pattern pattern = Pattern.compile(regex);
-        double totalMoney=0;
+        double totalMoney = 0;
 
         while (!input.equals("end of shift")) {
 
             Matcher matcher = pattern.matcher(input);
 
-            if(matcher.find()){
+            if (matcher.find()) {
 
                 String name = matcher.group("name");
+                String product = matcher.group("product");
+                int quantity = Integer.parseInt(matcher.group("quantity"));
+                double price = Double.parseDouble(matcher.group("price"));
 
-
-                double currentPrice =
+                double currentPrice = quantity * price;
+                System.out.printf("%s: %s - %.2f\n",name, product,currentPrice);
+                totalMoney+=currentPrice;
             }
-            System.out.printf("{customerName}: {product} - {totalPrice}");
             input = scanner.nextLine();
         }
-        System.out.printf("Total income: %.2f",totalMoney);
+        System.out.printf("Total income: %.2f", totalMoney);
     }
 }
